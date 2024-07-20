@@ -1,7 +1,11 @@
-const express      = require('express');
-const bodyParser   = require('body-parser');
+require('dotenv').config();
+
+const express       = require('express');
+const bodyParser    = require('body-parser');
+const path          = require('path');
 
 const { handleWebhook } = require('./src/controllers/bitrixWebhook');
+const { transcribeAudio } = require('./src/routes/openAi');
 
 const PORT = process.env.PORT || 3000;
 
