@@ -18,16 +18,11 @@ This repository contains a Node.js server built with ExpressJS that integrates w
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/bitrix24-webhook-to-openai.git
-    cd bitrix24-webhook-to-openai
+    git clone https://github.com/SvobodaGaming/calls_transcribing.git
+    cd calls_transcribing
     ```
 
-2. Install the dependencies:
-    ```bash
-    npm install
-    ```
-
-3. Create a `.env` file in the root directory and add the following environment variables:
+2. Create a `.env` file in the root directory and add the following environment variables:
     ```plaintext
     PORT=3000
     OPENAI_API_KEY=your-openai-api-key
@@ -38,7 +33,7 @@ This repository contains a Node.js server built with ExpressJS that integrates w
 
 4. Run the server:
     ```bash
-    node main.js
+    npm run start
     ```
 
 ## File Structure
