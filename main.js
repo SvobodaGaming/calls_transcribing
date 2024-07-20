@@ -4,8 +4,10 @@ const express       = require('express');
 const bodyParser    = require('body-parser');
 const path          = require('path');
 
-const { handleWebhook } = require('./src/controllers/bitrixWebhook');
-const { transcribeAudio } = require('./src/routes/openAi');
+const { handleWebhook }     = require('./src/controllers/bitrixWebhook');
+const { transcribeAudio }   = require('./src/routes/openAi');
+const { manageText }        = require('./src/routes/textManagerAI');
+const { addTextToSheet }    = require('./src/models/tablesManager');
 
 const PORT = process.env.PORT || 3000;
 
