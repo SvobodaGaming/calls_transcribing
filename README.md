@@ -44,7 +44,7 @@ This is the entry point of the application. It sets up the Express server, confi
 ### tablesManager.js
 This module handles adding the original and modified text to a Google Sheets document using the Google Sheets API.
 
-### openAI.js
+### speechToText.js
 This module uses OpenAI's API to transcribe audio files to text.
 
 ### bitrixWebhook.js
