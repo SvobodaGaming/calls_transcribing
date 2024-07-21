@@ -4,8 +4,9 @@ const handleWebhook = (req, res) => {
     
     console.log(`Webhook received from: ${ip}`);
     res.status(200).send('Ok');
+
 };
 
 module.exports = {
-    handleWebhook,
+    handleWebhook
 };
