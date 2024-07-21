@@ -1,4 +1,5 @@
 # Node.js Server for Bitrix24 Webhook Integration 🚀
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 This repository contains a Node.js server built with ExpressJS that integrates with Bitrix24 to handle webhooks, transcribe audio files to text, use OpenAI's GPT-3.5-turbo model to analyze and improve the text, and finally, send the original and modified text to a Google Sheets document.
 
