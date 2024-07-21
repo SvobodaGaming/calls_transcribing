@@ -6,13 +6,11 @@ const openai = new openAI({
 });
 
 const transcribeAudio = async (filePath) => {
-    const model = 'whisper-1';
-
     try {
         const fileBuffer = fs.createReadStream(filePath);
         const transcription = await openai.audio.transcriptions.create({
+            model: 'whisper-1',
             file: fileBuffer,
-            model: model,
         });
 
         console.log(transcription.text);
@@ -22,5 +20,5 @@ const transcribeAudio = async (filePath) => {
 };
 
 module.exports = {
-    transcribeAudio,
+    transcribeAudio
 }

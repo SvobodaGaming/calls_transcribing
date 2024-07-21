@@ -20,5 +20,5 @@ const manageText = async (inputText) => {
 }
 
 module.exports = {
-    manageText,
+    manageText
 }
