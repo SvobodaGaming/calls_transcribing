@@ -1,6 +1,6 @@
 const ffpegAudio = require('ffmpeg-audio-mixer');
 
-const convert = async(inputFilePath, exportFilePath) => {
+const convertAudio = async(inputFilePath, exportFilePath) => {
     const codec = 'libmp3lame';
 
     try {
@@ -12,5 +12,5 @@ const convert = async(inputFilePath, exportFilePath) => {
 }
 
 module.exports = {
-    convert,
+    convertAudio,
 }
