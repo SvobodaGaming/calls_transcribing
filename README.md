@@ -1,20 +1,20 @@
-# Node.js Server for Bitrix24 Webhook Integration
+# Node.js Server for Bitrix24 Webhook Integration 🚀
 
 This repository contains a Node.js server built with ExpressJS that integrates with Bitrix24 to handle webhooks, transcribe audio files to text, use OpenAI's GPT-3.5-turbo model to analyze and improve the text, and finally, send the original and modified text to a Google Sheets document.
 
-## Features
-- Receives webhook events from Bitrix24
-- Transcribes audio files to text using OpenAI's Whisper model
-- Analyzes and improves text using GPT-3.5-turbo
-- Stores the original and modified text in a Google Sheets document
+## Features ✨
+- 📬 Receives webhook events from Bitrix24
+- 🎙️ Transcribes audio files to text using OpenAI's Whisper model
+- 🤖 Analyzes and improves text using GPT-3.5-turbo
+- 📊 Stores the original and modified text in a Google Sheets document
 
-## Prerequisites
-- Node.js (v14 or higher)
-- A Bitrix24 account with webhook permissions
-- An OpenAI API key
-- Google Service Account credentials for accessing Google Sheets
+## Prerequisites 📋
+- 🟢 Node.js (v14 or higher)
+- 🛠️ A Bitrix24 account with webhook permissions
+- 🔑 An OpenAI API key
+- 📧 Google Service Account credentials for accessing Google Sheets
 
-## Setup
+## Setup 🔧
 
 1. Clone the repository:
     ```bash
@@ -36,7 +36,7 @@ This repository contains a Node.js server built with ExpressJS that integrates w
     npm run start
     ```
 
-## File Structure
+## File Structure 📂
 
 ### main.js
 This is the entry point of the application. It sets up the Express server, configures middleware, and defines the route for handling Bitrix24 webhooks.
@@ -50,15 +50,15 @@ This module uses OpenAI's API to transcribe audio files to text.
 ### bitrixWebhook.js
 This module handles incoming webhook events from Bitrix24.
 
-## Usage
+## Usage 🛠️
 
 1. Set up the webhook in your Bitrix24 account to point to your server's `/webhook` endpoint.
 2. When an audio file is received, it will be transcribed to text using OpenAI.
 3. The transcribed text will be analyzed and improved by GPT-3.5-turbo.
 4. Both the original and modified texts will be added to a Google Sheets document.
 
-## Contributing
+## Contributing 🤝
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-## License
+## License 📜
 [Apache-2.0](LICENSE)
