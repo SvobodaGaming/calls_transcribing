@@ -17,6 +17,6 @@ app.use(bodyParser.json());
 
 app.use('/webhook', handleWebhook);
 
-app.listen(PORT, () => {
+app.listen(port, () => {
     console.log(`Server started on port: ${port}`);
 });
