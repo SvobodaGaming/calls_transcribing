@@ -9,7 +9,7 @@ const manageText = async (inputText) => {
     try {
         const completion = await openai.completions.create({
             model: 'gpt-3.5-turbo-instruct',
-            prompt: `Проанализируй этот разговор: ${inputText}\nОцени качество разговора, выяви ошибки, интерпретируй данные и дай рекомендации по доработке текста.`,
+            prompt: `Проанализируй этот разговор: "${inputText}"\nОцени качество разговора, выяви ошибки, интерпретируй данные и дай рекомендации по доработке текста. Отправь ТОЛЬКО модифицированный текст.`,
             max_tokens: 300,
             temperature: 1
         });

@@ -13,7 +13,7 @@ const transcribeAudio = async (filePath) => {
             file: fileBuffer,
         });
 
-        console.log(transcription.text);
+        return transcription.text;
     } catch (error) {
         console.error(`Error while transcribing audio: ${error}`);
     }
