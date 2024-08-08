@@ -30,16 +30,13 @@ const handleWebhook = async (req, res) => {
 
         // Step 1: Transcribe audio to text
         const transcriptionText = await transcribeAudio(finalFilePath);
-        console.log(`Transcription: ${transcriptionText}`);
 
         // Step 2: Analyze the transcription text
         const analysisResult = await manageText(transcriptionText);
 
-        console.log(`Analysis Result: ${analysisResult}`);
-
         // Step 3: Return the result to the client
         addTextToSheet(transcriptionText, analysisResult)
-        res.status(200).send('Ok');
+        res.status(200).send('Done');
 
     } catch (err) {
         console.error('Error processing file:', err);
