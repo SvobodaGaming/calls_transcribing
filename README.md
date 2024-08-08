@@ -36,6 +36,26 @@ This repository contains a Node.js server built with ExpressJS that integrates w
     ```bash
     npm run start
     ```
+### Or use Docker
+1. Create volume:
+    ```bash
+    docker volume create calls_data
+    ```
+2. Run container:
+    ```bash
+    docker run -d --name=calls_transcribing \
+     -p 3000:3000 \
+     --network=bridge \
+     -e PORT=3000 \
+     -e OPENAI_API_KEY=your_openai_key \
+     -e GOOGLE_SERVICE_ACCOUNT_EMAIL=your_google_service_email \
+     -e GOOGLE_PRIVATE_KEY=your_google_key \
+     -e GOOGLE_SPREADSHEET_ID=your_spreadsheet_id \
+     -v calls_data:/usr/src/app/uploads \
+     --restart unless-stopped \
+     svobodayt/calls-transcribing
+    ```
+    
 
 ## File Structure 📂
 
