@@ -18,6 +18,16 @@ const handleWebhook = (req, res) => {
         return res.status(400).send('No file uploaded');
     }
 
+    const { name, full_path, type, tmp_name, error, size } = req.body;
+
+    console.log('Received file data:');
+    console.log(`Name: ${name}`);
+    console.log(`Full Path: ${full_path}`);
+    console.log(`Type: ${type}`);
+    console.log(`Temporary Name: ${tmp_name}`);
+    console.log(`Error: ${error}`);
+    console.log(`Size: ${size}`);
+
     const filePath = path.join(uploadDir, req.file.filename);
     const originalName = req.file.originalname;
 

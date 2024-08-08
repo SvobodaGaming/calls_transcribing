@@ -6,10 +6,6 @@ const path = require('path');
 const multer = require('multer');
 
 const { handleWebhook } = require('./src/controllers/bitrixWebhook');
-const { transcribeAudio } = require('./src/routes/speechToText');
-const { manageText } = require('./src/routes/textManagerAI');
-const { addTextToSheet } = require('./src/models/tablesManager');
-const { convertAudio } = require('./src/models/convertAudio');
 
 const port = process.env.PORT || 3000;
 
@@ -18,7 +14,7 @@ app.use(bodyParser.json());
 
 const upload = multer({ dest: 'uploads/' });
 
-app.post('/webhook', upload.single('audioFile'), handleWebhook);
+app.post('/webhook', upload.single('file'), handleWebhook);
 
 app.listen(port, () => {
     console.log(`Server started on port: ${port}`);
