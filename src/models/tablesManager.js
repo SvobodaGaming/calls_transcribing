@@ -16,7 +16,12 @@ const addTextToSheet = async (originalText, modifiedText) => {
 
     const sheet = doc.sheetsById[0];
     
-    await sheet.addRow({original: originalText, modified: modifiedText});
+    const formattedDate = new Date().toLocaleString('ru', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+    await sheet.addRow({"время": formattedDate, "оригинальная запись": originalText, "изменения": modifiedText});
 
     console.log('Information successfully added to Google Sheet');
 
