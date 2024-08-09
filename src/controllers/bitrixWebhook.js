@@ -30,10 +30,11 @@ const handleWebhook = async (req, res) => {
 
         // Step 1: Transcribe audio to text
         const transcriptionText = await transcribeAudio(finalFilePath);
+        console.log(`Transcribed: ${transcriptionText}`);
 
         // Step 2: Analyze the transcription text
         const analysisResult = await manageText(transcriptionText);
-
+        console.log(`AI: ${analysisResult}`);
         // Step 3: Return the result to the client
         addTextToSheet(transcriptionText, analysisResult)
         res.status(200).send('Done');
