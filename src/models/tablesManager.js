@@ -2,7 +2,7 @@ const { JWT } = require('google-auth-library');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
 // Initialize auth - see https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication
-const addTextToSheet = async (originalText, modifiedText) => {
+const addTextToSheet = async (originalText, userId, mistakes, recomendations) => {
   try {
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
@@ -24,7 +24,7 @@ const addTextToSheet = async (originalText, modifiedText) => {
       minute: 'numeric',
       timeZone: 'Europe/Moscow'
     })
-    await sheet.addRow({"время": formattedDate, "оригинальная запись": originalText, "изменения": modifiedText});
+    await sheet.addRow({"Время": formattedDate,"ID пользователя": userId, "Оригинальная запись": originalText, "Ошибки": mistakes, "Рекомендации по улучшению качества разговора": recomendations});
 
     console.log('Information successfully added to Google Sheet');
 

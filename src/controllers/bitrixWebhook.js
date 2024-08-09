@@ -9,11 +9,11 @@ const generateUniqueFilename = () => {
     const now = new Date();
     const formattedDate = now.toISOString().replace(/[-T:.Z]/g, ''); // Example: 20240808T123456
     const uniqueId = uuidv4().split('-')[0]; 
-    return `audio-${formattedDate}-${uniqueId}.mp3`;
+    return `call-${formattedDate}-${uniqueId}.mp3`;
 };
 
 const handleWebhook = async (req, res) => {
-    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB`);
+    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB, userID: ${req.userId}`);
 
     if (!req.file) {
         return res.status(400).send('No file uploaded');
@@ -35,8 +35,10 @@ const handleWebhook = async (req, res) => {
         // Step 2: Analyze the transcription text
         const analysisResult = await manageText(transcriptionText);
         console.log(`AI: ${analysisResult}`);
+        console.log(`AI_analysis: ${analysisResult.analysis}`);
+        console.log(`AI_suggest: ${analysisResult.suggestions}`);
         // Step 3: Return the result to the client
-        addTextToSheet(transcriptionText, analysisResult)
+        addTextToSheet(transcriptionText, analysisResult.analysis, analysisResult.suggestions)
         res.status(200).send('Done');
 
     } catch (err) {
