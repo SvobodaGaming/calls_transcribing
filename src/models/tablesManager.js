@@ -19,7 +19,10 @@ const addTextToSheet = async (originalText, modifiedText) => {
     const formattedDate = new Date().toLocaleString('ru', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      timeZone: 'Europe/Moscow'
     })
     await sheet.addRow({"время": formattedDate, "оригинальная запись": originalText, "изменения": modifiedText});
 
