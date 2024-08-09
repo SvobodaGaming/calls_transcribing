@@ -28,18 +28,23 @@ const handleWebhook = async (req, res) => {
         await fs.rename(tempFilePath, finalFilePath);
         console.log(`File saved: ${finalFilePath}`);
 
-        // Step 1: Transcribe audio to text
-        const transcriptionText = await transcribeAudio(finalFilePath);
-        console.log(`Transcribed: ${transcriptionText}`);
+        if (parseInt(req.callDuration) >= 5) {
+            // Step 1: Transcribe audio to text
+            const transcriptionText = await transcribeAudio(finalFilePath);
+            console.log(`Transcribed: ${transcriptionText}`);
 
-        // Step 2: Analyze the transcription text
-        const analysisResult = await manageText(transcriptionText);
-        console.log(`AI: ${analysisResult}`);
-        console.log(`AI_analysis: ${analysisResult.analysis}`);
-        console.log(`AI_suggest: ${analysisResult.suggestions}`);
-        // Step 3: Return the result to the client
-        addTextToSheet(transcriptionText, analysisResult.analysis, analysisResult.suggestions)
-        res.status(200).send('Done');
+            // Step 2: Analyze the transcription text
+            const analysisResult = await manageText(transcriptionText);
+            console.log(`AI: ${analysisResult}`);
+            console.log(`AI_analysis: ${analysisResult.analysis}`);
+            console.log(`AI_suggest: ${analysisResult.suggestions}`);
+            // Step 3: Return the result to the client
+            addTextToSheet(transcriptionText, req.userId, analysisResult.analysis, analysisResult.suggestions)
+            res.status(200).send('Done');
+        } else {
+            console.warn('This call is too short');
+            res.status(500).send('Call is too short!');
+        }
 
     } catch (err) {
         console.error('Error processing file:', err);
