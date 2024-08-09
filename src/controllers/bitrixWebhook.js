@@ -13,7 +13,7 @@ const generateUniqueFilename = () => {
 };
 
 const handleWebhook = async (req, res) => {
-    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB, userID: ${req.userId}`);
+    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB, userID: ${req.body.userId}`);
 
     if (!req.file) {
         return res.status(400).send('No file uploaded');
@@ -28,7 +28,7 @@ const handleWebhook = async (req, res) => {
         await fs.rename(tempFilePath, finalFilePath);
         console.log(`File saved: ${finalFilePath}`);
 
-        if (parseInt(req.callDuration) >= 5) {
+        if (parseInt(req.body.callDuration) >= 5) {
             // Step 1: Transcribe audio to text
             const transcriptionText = await transcribeAudio(finalFilePath);
             console.log(`Transcribed: ${transcriptionText}`);
@@ -39,7 +39,7 @@ const handleWebhook = async (req, res) => {
             console.log(`AI_analysis: ${analysisResult.analysis}`);
             console.log(`AI_suggest: ${analysisResult.suggestions}`);
             // Step 3: Return the result to the client
-            addTextToSheet(transcriptionText, req.userId, analysisResult.analysis, analysisResult.suggestions)
+            addTextToSheet(transcriptionText, req.body.userId, analysisResult.analysis, analysisResult.suggestions)
             res.status(200).send('Done');
         } else {
             console.warn('This call is too short');
