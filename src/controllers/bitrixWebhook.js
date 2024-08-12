@@ -39,7 +39,7 @@ const handleWebhook = async (req, res) => {
             console.log(`AI_analysis: ${analysisResult.analysis}`);
             console.log(`AI_suggest: ${analysisResult.suggestions}`);
             // Step 3: Return the result to the client
-            addTextToSheet(transcriptionText, req.body.userId, analysisResult.analysis, analysisResult.suggestions)
+            addTextToSheet(analysisResult.roles, req.body.userId, analysisResult.analysis, analysisResult.suggestions)
             res.status(200).send('Done');
         } else {
             console.warn('This call is too short');
