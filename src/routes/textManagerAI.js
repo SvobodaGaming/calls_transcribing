@@ -19,8 +19,6 @@ const manageText = async (inputText) => {
             ### [BLOCK2] Оцени качество разговора:
             ◦ Выяви ошибки, интерпретируй данные, и дай рекомендации по доработке текста.
             ◦ Приводи ошибки в том порядке, в котором они встречаются в тексте.
-            ◦ Если в тексте есть приветствие или название компании, убедись в их правильности.
-            ◦ Игнорируй звуковые сигналы (гудки) и пустые фразы без смысловой нагрузки.
             ◦ Если в тексте нет ошибок, напиши: "Ошибок нет".
 
             ### [BLOCK3] Представь улучшенный вариант разговора:
@@ -36,9 +34,9 @@ const manageText = async (inputText) => {
             temperature: 0.6
         });
 
-        const resultText = completion.choices[0]['text'];
+        let resultText = completion.choices[0]['text'];
 
-        const parts = resultText.split(/### \[BLOCK\d\]/).filter(Boolean);
+        const parts = resultText.split(/### \[BLOCK\d\]/).map(part => part.trim()).filter(Boolean);
 
         if (parts.length !== 3) {
             console.error('Unexpected response format', { resultText, parts });
@@ -46,9 +44,9 @@ const manageText = async (inputText) => {
         }
 
         return {
-            roles: parts[0]?.trim(),
-            analysis: parts[1]?.trim(),
-            suggestions: parts[2]?.trim()
+            roles: parts[0],
+            analysis: parts[1],
+            suggestions: parts[2]
         };
 
     } catch (error) {
