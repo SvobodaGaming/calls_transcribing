@@ -12,7 +12,9 @@ const manageText = async (inputText) => {
             ### [BLOCK1] Распредели роли в тексте:
             ◦ Определи, кто является клиентом, а кто — сотрудником компании. Обозначь их как "Клиент" и "Сотрудник" соответственно.
             ◦ Убедись, что речь каждой роли соответствует ее контексту (например, сотрудник должен говорить вежливо и профессионально, а клиент может выражать свои запросы или жалобы).
-            ◦ Выведи этот же разговор, но с распределением ролей.
+            ◦ Выведи этот же разговор, но с распределением ролей, используя формат:
+            Клиент: Первая реплика
+            Сотрудник: Ответная реплика
 
             ### [BLOCK2] Оцени качество разговора:
             ◦ Выяви ошибки, интерпретируй данные, и дай рекомендации по доработке текста.
@@ -36,9 +38,7 @@ const manageText = async (inputText) => {
 
         const resultText = completion.choices[0]['text'];
 
-        const cleanedText = resultText.replace(/\s+/g, ' ').trim();
-
-        const parts = cleanedText.split(/### \[BLOCK\d\]/).filter(Boolean);
+        const parts = resultText.split(/### \[BLOCK\d\]/).filter(Boolean);
 
         if (parts.length !== 3) {
             console.error('Unexpected response format', { resultText, parts });
@@ -55,7 +55,7 @@ const manageText = async (inputText) => {
         console.error(`Error while managing text: ${error}`);
         throw error;
     }
-}
+};
 
 module.exports = {
     manageText
