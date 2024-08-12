@@ -36,7 +36,14 @@ const manageText = async (inputText) => {
 
         const resultText = completion.choices[0]['text'];
 
-        const parts = resultText.split(/### \[BLOCK\d\]/).filter(Boolean);
+        const cleanedText = resultText.replace(/\s+/g, ' ').trim();
+
+        const parts = cleanedText.split(/### \[BLOCK\d\]/).filter(Boolean);
+
+        if (parts.length !== 3) {
+            console.error('Unexpected response format', { resultText, parts });
+            throw new Error('Response from AI has an unexpected format.');
+        }
 
         return {
             roles: parts[0]?.trim(),
@@ -46,6 +53,7 @@ const manageText = async (inputText) => {
 
     } catch (error) {
         console.error(`Error while managing text: ${error}`);
+        throw error;
     }
 }
 
