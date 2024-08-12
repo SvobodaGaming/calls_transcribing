@@ -39,7 +39,6 @@ const handleWebhook = async (req, res) => {
         if (parseInt(req.body.callDuration) >= 5) {
             // Step 1: Transcribe audio to text
             const transcriptionText = await transcribeAudio(finalFilePath);
-            console.log(`Transcribed: ${transcriptionText}`);
 
             // Step 2: Analyze the transcription text
             const analysisResult = await manageText(transcriptionText);
