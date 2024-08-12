@@ -1,9 +1,9 @@
 const { JWT } = require('google-auth-library');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 
-// Initialize auth - see https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication
 const addTextToSheet = async (originalText, userId, mistakes, recomendations) => {
   try {
+    // Initialize auth - see https://theoephraim.github.io/node-google-spreadsheet/#/guides/authentication
     const serviceAccountAuth = new JWT({
       email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
       key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),

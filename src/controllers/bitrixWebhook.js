@@ -35,7 +35,7 @@ const handleWebhook = async (req, res) => {
 
             // Step 2: Analyze the transcription text
             const analysisResult = await manageText(transcriptionText);
-            console.log(`AI: ${analysisResult}`);
+            console.log(`AI_original: ${analysisResult.roles}`);
             console.log(`AI_analysis: ${analysisResult.analysis}`);
             console.log(`AI_suggest: ${analysisResult.suggestions}`);
             // Step 3: Return the result to the client

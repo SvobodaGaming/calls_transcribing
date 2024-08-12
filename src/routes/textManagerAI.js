@@ -36,8 +36,6 @@ const manageText = async (inputText) => {
 
         const resultText = completion.choices[0]['text'];
 
-        console.log(resultText);
-
         const parts = resultText.split(/### \[BLOCK\d\]/).filter(Boolean);
 
         return {
