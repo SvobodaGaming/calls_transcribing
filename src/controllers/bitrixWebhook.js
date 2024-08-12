@@ -13,7 +13,15 @@ const generateUniqueFilename = () => {
 };
 
 const handleWebhook = async (req, res) => {
-    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB, userID: ${req.body.userId}`);
+    const formattedDate = new Date().toLocaleString('ru', {
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        timeZone: 'Europe/Moscow'
+      })
+    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB, time: ${formattedDate}`);
 
     if (!req.file) {
         return res.status(400).send('No file uploaded');
@@ -35,9 +43,7 @@ const handleWebhook = async (req, res) => {
 
             // Step 2: Analyze the transcription text
             const analysisResult = await manageText(transcriptionText);
-            console.log(`AI_original: ${analysisResult.roles}`);
-            console.log(`AI_analysis: ${analysisResult.analysis}`);
-            console.log(`AI_suggest: ${analysisResult.suggestions}`);
+
             // Step 3: Return the result to the client
             addTextToSheet(analysisResult.roles, req.body.userId, analysisResult.analysis, analysisResult.suggestions)
             res.status(200).send('Done');
