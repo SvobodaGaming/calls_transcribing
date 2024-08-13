@@ -1,6 +1,5 @@
 const path = require('path');
 const fs = require('fs').promises;
-const { v4: uuidv4 } = require('uuid');
 const { transcribeAudio } = require('../routes/speechToText');
 const { manageText } = require('../routes/textManagerAI');
 const { addTextToSheet } = require('../models/tablesManager');
@@ -28,17 +27,12 @@ const handleWebhook = async (req, res) => {
     }
 
     const tempFilePath = path.join(__dirname, '../../uploads', req.file.filename);
-    const uniqueFilename = generateUniqueFilename();
-    const finalFilePath = path.join(__dirname, '../../uploads', uniqueFilename);
+    await fs.rename(tempFilePath, tempFilePath + '.mp3');
 
     try {
-        await fs.access(tempFilePath);
-        await fs.rename(tempFilePath, finalFilePath);
-        console.log(`File saved: ${finalFilePath}`);
-
         if (parseInt(req.body.callDuration) >= 5) {
             // Step 1: Transcribe audio to text
-            const transcriptionText = await transcribeAudio(finalFilePath);
+            const transcriptionText = await transcribeAudio(tempFilePath + '.mp3');
 
             // Step 2: Analyze the transcription text
             const analysisResult = await manageText(transcriptionText);
@@ -46,6 +40,9 @@ const handleWebhook = async (req, res) => {
             // Step 3: Return the result to the client
             addTextToSheet(analysisResult.roles, req.body.userId, analysisResult.analysis, analysisResult.suggestions)
             res.status(200).send('Done');
+
+            // Step 4: Removing audio
+            await fs.rm(tempFilePath + '.mp3');
         } else {
             console.warn('This call is too short');
             res.status(500).send('Call is too short!');
