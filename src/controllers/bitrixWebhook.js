@@ -4,13 +4,6 @@ const { transcribeAudio } = require('../routes/speechToText');
 const { manageText } = require('../routes/textManagerAI');
 const { addTextToSheet } = require('../models/tablesManager');
 
-const generateUniqueFilename = () => {
-    const now = new Date();
-    const formattedDate = now.toISOString().replace(/[-T:.Z]/g, ''); // Example: 20240808T123456
-    const uniqueId = uuidv4().split('-')[0]; 
-    return `call-${formattedDate}-${uniqueId}.mp3`;
-};
-
 const handleWebhook = async (req, res) => {
     const formattedDate = new Date().toLocaleString('ru', {
         year: 'numeric',
@@ -19,7 +12,7 @@ const handleWebhook = async (req, res) => {
         hour: 'numeric',
         minute: 'numeric',
         timeZone: 'Europe/Moscow'
-      })
+    });
     console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB, time: ${formattedDate}`);
 
     if (!req.file) {
@@ -38,7 +31,7 @@ const handleWebhook = async (req, res) => {
             const analysisResult = await manageText(transcriptionText);
 
             // Step 3: Return the result to the client
-            addTextToSheet(analysisResult.roles, req.body.userId, analysisResult.analysis, analysisResult.suggestions)
+            await addTextToSheet(analysisResult.roles, req.body.userId, analysisResult.analysis, analysisResult.suggestions);
             res.status(200).send('Done');
 
             // Step 4: Removing audio
