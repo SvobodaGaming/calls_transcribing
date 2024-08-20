@@ -23,7 +23,7 @@ const handleWebhook = async (req, res) => {
     await fs.rename(tempFilePath, tempFilePath + '.mp3');
 
     try {
-        if (parseInt(req.body.callDuration) >= 5) {
+        if (parseInt(req.body.callDuration) >= 7) {
             // Step 1: Transcribe audio to text
             const transcriptionText = await transcribeAudio(tempFilePath + '.mp3');
 
@@ -35,7 +35,9 @@ const handleWebhook = async (req, res) => {
             res.status(200).send('Done');
 
             // Step 4: Removing audio
-            await fs.rm(tempFilePath + '.mp3');
+            if (process.env.REMOVE_AUDIO ==  'true') {
+                await fs.rm(tempFilePath + '.mp3');
+            }
         } else {
             console.warn('This call is too short');
             res.status(500).send('Call is too short!');
