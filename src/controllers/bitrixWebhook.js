@@ -4,6 +4,12 @@ const { transcribeAudio } = require('../routes/speechToText');
 const { manageText } = require('../routes/textManagerAI');
 const { addTextToSheet } = require('../models/tablesManager');
 
+const generateUniqueFilename = () => {
+    const now = new Date();
+    const formattedDate = now.toISOString().replace(/[-T:.Z]/g, ''); // Example: 20240808T123456
+    return `call-${formattedDate}.mp3`;
+};
+
 const handleWebhook = async (req, res) => {
     const formattedDate = new Date().toLocaleString('ru', {
         year: 'numeric',
@@ -13,19 +19,25 @@ const handleWebhook = async (req, res) => {
         minute: 'numeric',
         timeZone: 'Europe/Moscow'
     });
-    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**20).toFixed(2)}MB, time: ${formattedDate}`);
+    console.log(`Request file name: ${req.file.originalname}, encoding: ${req.file.encoding} size: ${((req.file.size)/2**10).toFixed(2)}kB, time: ${formattedDate}`);
 
     if (!req.file) {
         return res.status(400).send('No file uploaded');
     }
 
     const tempFilePath = path.join(__dirname, '../../uploads', req.file.filename);
-    await fs.rename(tempFilePath, tempFilePath + '.mp3');
+    const uniqueFilename = generateUniqueFilename();
+    const finalFilePath = path.join(__dirname, '../../uploads', uniqueFilename);
+
+    const REMOVE_AUDIO = process.env.REMOVE_AUDIO || 'false';
 
     try {
+        await fs.access(tempFilePath);
+        await fs.rename(tempFilePath, finalFilePath);
+
         if (parseInt(req.body.callDuration) >= 7) {
             // Step 1: Transcribe audio to text
-            const transcriptionText = await transcribeAudio(tempFilePath + '.mp3');
+            const transcriptionText = await transcribeAudio(finalFilePath);
 
             // Step 2: Analyze the transcription text
             const analysisResult = await manageText(transcriptionText);
@@ -35,8 +47,8 @@ const handleWebhook = async (req, res) => {
             res.status(200).send('Done');
 
             // Step 4: Removing audio
-            if (process.env.REMOVE_AUDIO ==  'true') {
-                await fs.rm(tempFilePath + '.mp3');
+            if (REMOVE_AUDIO.toLowerCase() ==  'true') {
+                await fs.rm(finalFilePath);
             }
         } else {
             console.warn('This call is too short');

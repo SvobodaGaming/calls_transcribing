@@ -6,4 +6,6 @@ WORKDIR /usr/src/app
 
 COPY . ./
 
+RUN npm install --no-fund
+
 CMD npm run start

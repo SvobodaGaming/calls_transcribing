@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "main.js",
   "scripts": {
-    "start": "npm install && node main.js"
+    "start": "node main.js"
   },
   "author": "SvobodaGaming",
   "license": "Apache-2.0",
