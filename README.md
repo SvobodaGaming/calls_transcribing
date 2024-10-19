@@ -27,6 +27,8 @@ This repository contains a Node.js server built with ExpressJS that integrates w
     ```plaintext
     PORT=3000
     OPENAI_API_KEY=your-openai-api-key
+    OPENAI_MODEL=chatgpt-model
+    OPENAI_PROMPT=your-prompt
     GOOGLE_SERVICE_ACCOUNT_EMAIL=your-google-service-account-email
     GOOGLE_PRIVATE_KEY=your-google-private-key
     GOOGLE_SPREADSHEET_ID=your-google-spreadsheet-id
@@ -48,6 +50,8 @@ This repository contains a Node.js server built with ExpressJS that integrates w
      --network=bridge \
      -e PORT=3000 \
      -e OPENAI_API_KEY=your_openai_key \
+     -e OPENAI_MODEL=chatgpt-model \
+     -e OPENAI_PROMPT=your-prompt \
      -e GOOGLE_SERVICE_ACCOUNT_EMAIL=your_google_service_email \
      -e GOOGLE_PRIVATE_KEY=your_google_key \
      -e GOOGLE_SPREADSHEET_ID=your_spreadsheet_id \
