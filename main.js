@@ -12,7 +12,7 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(bodyParser.json());
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ dest: 'uploads/', limits: {fileFilter: "audio/*"} });
 
 app.post('/webhook', upload.single('file'), handleWebhook);
 
