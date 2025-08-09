@@ -12,7 +12,17 @@ const port = process.env.PORT || 3000;
 const app = express();
 app.use(bodyParser.json());
 
-const upload = multer({ dest: 'uploads/', limits: {fileFilter: "audio/*"} });
+// Configure multer to accept only audio files
+const upload = multer({
+    dest: 'uploads/',
+    fileFilter: (req, file, cb) => {
+        if (file.mimetype && file.mimetype.startsWith('audio/')) {
+            cb(null, true);
+        } else {
+            cb(new Error('Only audio files are allowed'));
+        }
+    },
+});
 
 app.post('/webhook', upload.single('file'), handleWebhook);
 
